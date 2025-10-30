@@ -10,6 +10,7 @@ import AnimStep2 from "./anims/AnimStep2";
 import { AnimStep3 } from "./anims/AnimStep3";
 import { AnimStep4 } from "./anims/AnimStep4";
 import arrowRight from '/arrowright.svg';
+import { useIsMobile } from "./hooks/useIsMobile";
 
 type Step = {
     step: 1 | 2 | 3 | 4;
@@ -68,7 +69,7 @@ function StepsBtn({ step, className }: { step?: Step['step'], className?: string
             <div className="flex items-center gap-6">
                 {mstep == item.step ? <TextLG text={`0${item.step}`} className="text-2xl" /> : <span className="text-xl text-white/20">0{item.step}</span>}
                 <div>
-                    {mstep == item.step && <img src={arrowRight} className="w-[.875rem]" />}
+                    {mstep == item.step && <img src={arrowRight} className="w-3.5" />}
                 </div>
             </div>
             <div style={{
@@ -80,50 +81,45 @@ function StepsBtn({ step, className }: { step?: Step['step'], className?: string
 }
 
 export function Frame2() {
-    // const container = useRef<HTMLDivElement>(null);
-    // useGSAP((ctx) => {
-    //     // gsap 实现pin多个元素
-
-    // }, { scope: container });
     const snap = useSnapshot(stepState)
     const data = steps.find(item => item.step == snap.step)!
-    return <div className="root_anim_item flex flex-col w-full">
-        {/* {steps.map(data => <div id={"frame2-step"} key={`step_${data.step}`}
-            className="w-screen h-screen max-h-200 grid grid-cols-[85fr_107fr]">
-            <div style={{ background: 'linear-gradient(180deg, #FA8B16 0%, #FFC144 100%)' }}
-                className="h-full flex justify-end items-center ">
-                <div className=" max-w-150 flex flex-col gap-8 items-start p-4 text-black">
-                    <div className="font-semibold text-2xl">0{data.step}</div>
-                    <div className="font-medium font-lexend text-[2rem]">{data.tit}</div>
-                    {data.text.map((item, i) => <div key={i}>{item}</div>)}
+    const isMobile = useIsMobile()
+    return <div className="flex flex-col w-full">
+        {isMobile ?
+            <div className="flex flex-col w-full md:hidden">
+                {steps.map(data => <div key={`step_${data.step}`}
+                    className="w-full">
+                    <div style={{ background: 'linear-gradient(180deg, #FA8B16 0%, #FFC144 100%)' }}
+                        className="root_anim_item flex flex-col gap-5 items-start px-4 py-6 text-black">
+                        <div className="font-semibold text-2xl">0{data.step}</div>
+                        <div className="font-medium font-lexend text-[1.75rem]">{data.tit}</div>
+                        {data.text.map((item, i) => <div key={i}>{item}</div>)}
+                    </div>
+                    <div className="root_anim_item w-full p-4">{data.content}</div>
+                </div>)}
+            </div>
+            : <div id={"frame2-step"}
+                style={{ background: 'linear-gradient(180deg, #FA8B16 0%, #FFC144 100%)' }}
+                className="root_anim_item w-screen h-screen max-h-200 hidden md:flex">
+                <div
+                    className=" h-full flex justify-end items-center w-full basis-[637px] flex-1">
+                    <div className="w-full max-w-[637px] relative">
+                        <AnimatePresence>
+                            <motion.div key={`frame2-step-text-${data.step}`} initial={{ opacity: 0, y: '50%' }} animate={{ y: '-50%', opacity: 1 }} exit={{ opacity: 0, y: '-150%' }}
+                                className="w-full absolute left-0 top-0 flex flex-col gap-8 items-start p-4 text-black">
+                                <div className="font-semibold text-2xl">0{data.step}</div>
+                                <div className="font-medium font-lexend text-[2rem]">{data.tit}</div>
+                                {data.text.map((item, i) => <div key={i}>{item}</div>)}
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
                 </div>
-            </div>
-            <div className="h-full bg-black relative" >
-                <StepsBtn step={data.step} className="absolute left-12.5 bottom-12.5" />
-            </div>
-        </div>)} */}
-        <div id={"frame2-step"}
-            style={{ background: 'linear-gradient(180deg, #FA8B16 0%, #FFC144 100%)' }}
-            className="root_anim_item w-screen h-screen max-h-200 flex">
-            <div
-                className=" h-full flex justify-end items-center w-full basis-[637px] flex-1">
-                <div className="w-full max-w-[637px] relative">
-                    <AnimatePresence>
-                        <motion.div key={`frame2-step-text-${data.step}`} initial={{ opacity: 0, y: '50%' }} animate={{ y: '-50%', opacity: 1 }} exit={{ opacity: 0, y: '-150%' }}
-                            className="w-full absolute left-0 top-0 flex flex-col gap-8 items-start p-4 text-black">
-                            <div className="font-semibold text-2xl">0{data.step}</div>
-                            <div className="font-medium font-lexend text-[2rem]">{data.tit}</div>
-                            {data.text.map((item, i) => <div key={i}>{item}</div>)}
-                        </motion.div>
-                    </AnimatePresence>
+                <div className=" h-full bg-black relative flex items-center pl-5 basis-[803px] flex-1" >
+                    <motion.div key={`frame2-step-svg-${data.step}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="w-full max-w-[803px]">
+                        {data.content}
+                    </motion.div>
+                    <StepsBtn step={data.step} className="absolute left-12.5 bottom-12.5" />
                 </div>
-            </div>
-            <div className=" h-full bg-black relative flex items-center pl-5 basis-[803px] flex-1" >
-                <motion.div key={`frame2-step-svg-${data.step}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="w-full max-w-[803px]">
-                    {data.content}
-                </motion.div>
-                <StepsBtn step={data.step} className="absolute left-12.5 bottom-12.5" />
-            </div>
-        </div>
+            </div>}
     </div>;
 }

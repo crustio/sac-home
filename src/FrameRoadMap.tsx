@@ -10,18 +10,37 @@ import currentUrl from '/roadmapcurrent.svg';
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(ScrollToPlugin)
 
+/*
+
+Q2 2026
+Testnet launch: LiteNode integration for Storage Network; initial PoCW testing in Compute.
+Q4 2026
+Mainnet beta: Full Storage Network rollout with RS-EC hybrid; NFT License delegation for Verify.
+Q2 2027
+Compute Network activation: Dynamic GPU auctions live; end-to-end TPS benchmarks >10K.
+Q4 2027
+Verify Network full deployment: BFT consensus optimization; AI Service Market beta.
+Q2 2028
+ZK proof integration: Privacy enhancements across networks; ecosystem partnerships.
+ */
 const items: {
     time: string,
     text: string
 }[] = [
         {
-            time: '2026 Q1', text: 'TestNet launch in May, with initial DAS implementation and related flows, full dev docsand SDK; CDK readiness for market promotion.'
+            time: 'Q2 2026', text: 'Testnet launch: LiteNode integration for Storage Network; initial PoCW testing in Compute.'
         },
         {
-            time: '2026 Q2', text: 'TestNet launch in May, with initial DAS implementation and related flows, full dev docsand SDK; CDK readiness for market promotion.'
+            time: 'Q4 2026', text: 'Mainnet beta: Full Storage Network rollout with RS-EC hybrid; NFT License delegation for Verify.'
         },
         {
-            time: '2026 Q3', text: 'TestNet launch in May, with initial DAS implementation and related flows, full dev docsand SDK; CDK readiness for market promotion.'
+            time: 'Q2 2027', text: 'Compute Network activation: Dynamic GPU auctions live; end-to-end TPS benchmarks >10K.'
+        },
+        {
+            time: 'Q4 2027', text: 'Verify Network full deployment: BFT consensus optimization; AI Service Market beta.'
+        },
+        {
+            time: 'Q2 2028', text: 'ZK proof integration: Privacy enhancements across networks; ecosystem partnerships.'
         },
     ]
 

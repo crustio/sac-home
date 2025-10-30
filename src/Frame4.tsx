@@ -12,7 +12,7 @@ import iconGpu from "/gpu.svg"
 import iconListimage from "/listimage.svg"
 import iconLitenode from "/litenode.svg"
 import iconStorage from "/storage.svg"
-import iconVerifynode from "/verifynode.svg"
+// import iconVerifynode from "/verifynode.svg"
 import { Button } from './components/ui/button'
 import { FaArrowRight } from 'react-icons/fa6'
 gsap.registerPlugin(DrawSVGPlugin)
@@ -86,7 +86,7 @@ export function Frame4() {
             <div className='flex-1 basis-xs flex gap-4 flex-col px-4 py-10 border-r border-r-[#2E2E2E]'>
                 <div className='root_anim_item flex flex-col gap-4'>
                     <div className='font-lexend text-[2rem] font-medium'>LiteNodes</div>
-                    <div className='text-xl whitespace-pre-wrap'>Plug-and-play hardware device for quick data syncing and edge AI support</div>
+                    <div className='text-xl whitespace-pre-wrap'>LiteNode supports quick data syncing and edge AI capabilities, with options for standard products or equivalent-performance PCs, laptops, or servers.</div>
                     <div className='text-xl flex items-center gap-2.5'>
                         <img className='w-6 aspect-square' src={iconLitenode} />
                         Standard Product
@@ -103,9 +103,9 @@ export function Frame4() {
             </div>
             <div className='flex-1 basis-xs flex gap-4 flex-col-reverse px-4 py-10'>
                 <div className='root_anim_item flex flex-col gap-4 pl-6'>
-                    <div className='font-lexend text-[2rem] font-medium'>VerifyNodes</div>
-                    <div className='text-xl whitespace-pre-wrap'>Validate transactions, data integrity, and AI outputs</div>
-                    <div className='text-xl flex items-center gap-2.5'>
+                    <div className='font-lexend text-[2rem] font-medium'>LiteNode License NFT</div>
+                    <div className='text-xl whitespace-pre-wrap'>Purchase a LiteNode License NFT to upgrade your LiteNode to participate in the Verification Network, enabling validation of data integrity and AI outputs through consensus, ensuring tamper-proof trustworthiness, while earning more incentives.</div>
+                    {/* <div className='text-xl flex items-center gap-2.5'>
                         <img className='w-6 aspect-square' src={iconVerifynode} />
                         Minimum requirment
                     </div>
@@ -115,7 +115,7 @@ export function Frame4() {
                         <Li>Standard laptop/desktop (Intel/AMD CPU 2+ cores)</Li>
                         <Li>8GB RAM, 500GB SSD</Li>
                         <Li>100Mbps internet</Li>
-                    </ul>
+                    </ul> */}
                     <Button variant="outline" size="lg" className='h-12 flex items-center gap-3 w-60 border-white/80 text-white'>Buy <FaArrowRight /></Button>
                 </div>
                 <SvgVerifynode className='root_anim_item' />

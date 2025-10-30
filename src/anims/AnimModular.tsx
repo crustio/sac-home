@@ -189,19 +189,20 @@ export function AnimModular() {
             <motion.g initial={{ opacity: 1 }} whileHover={{ opacity: 0.8 }}
                 onHoverStart={hoverG4.onHoverStart} onHoverEnd={hoverG4.onHoverEnd}>
                 <use href="#box_orange" />
-                {/* Verify Noddes */}
+                {/* DATA VERIFICATION */}
                 <path opacity="0.6" d="M958 344L1171.5 269" stroke="#FFC144" stroke-width="2" stroke-linecap="round" />
                 <g opacity="0.6" transform="translate(1177,250)">
                     <use href="#text_focus_l" x="0" y="0" />
-                    <use href="#text_focus_l" transform="rotate(180,0,0)" x="-185" y="-31.5" />
-                    <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">VERIFY NODDES</text>
+                    <use href="#text_focus_l" transform="rotate(180,0,0)" x="-230" y="-31.5" />
+                    <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">DATA VERIFICATION</text>
                     {hoverG4.isHover && <motion.g initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }}>
                         <use href="#text_bg" x="5" y="50" />
                         <text fill="#fff" fontFamily="Poppins" fontSize="14" transform="translate(20,60)">
-                            <tspan x="0" dy="1.5em">Global network of over 100,000 nodes </tspan>
-                            <tspan x="0" dy="1.5em">that validate data integrity and AI</tspan>
-                            <tspan x="0" dy="1.5em">outputs through consensus, ensuring</tspan>
-                            <tspan x="0" dy="1.5em">tamper-proof trustworthiness.</tspan>
+                            <tspan x="0" dy="1.5em">Upgrade LiteNodes with license to</tspan>
+                            <tspan x="0" dy="1.5em">participate in the Verification Network,</tspan>
+                            <tspan x="0" dy="1.5em">enabling validation of data integrity </tspan>
+                            <tspan x="0" dy="1.5em">and AI outputs through consensus,</tspan>
+                            <tspan x="0" dy="1.5em">ensuring tamper-proof trustworthiness.</tspan>
                         </text>
                     </motion.g>}
                 </g>
