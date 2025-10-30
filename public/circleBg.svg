@@ -1,0 +1,8 @@
+<svg width="1920" height="847" viewBox="0 0 240 106" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="filter0_d_34_13190">
+            <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#fff" flood-opacity="0.2"/>
+        </filter>
+    </defs>
+    <circle cx="120" cy="310" r="300" fill="black" filter="url(#filter0_d_34_13190)" />
+</svg>
