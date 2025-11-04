@@ -1,12 +1,12 @@
-import { AnimPointsByPaths } from "./anims/AnimPointsByPaths";
-import { TextLG } from "./components/Text";
-import { SvgLight } from "./svgs/SvgLight";
+import { AnimPointsByPaths } from "../anims/AnimPointsByPaths";
+import { TextLG } from "../components/Text";
+import { SvgLight } from "../svgs/SvgLight";
 import urlLeadingprojects from '/leadinprojects.svg'
 
 const projects: string[] = ['BTC', 'ETH', 'USDT', 'BNB', 'XMR', 'BUSD', 'EOS', 'SOL', 'DASH', 'HT']
 
 export function Frame5() {
-    return <div className="w-full">
+    return <div className="w-full hidden">
         <div className="relative bg-[#0B0B0B] w-full">
             <div className="root_anim_item flex items-end absolute left-0 -top-[clamp(40px,6.9vw,100px)] h-[clamp(40px,6.9vw,100px)] w-full pointer-events-none">
                 <SvgLight className="h-full w-auto" />

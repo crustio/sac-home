@@ -2,19 +2,20 @@
 import gsap from 'gsap'
 import DrawSVGPlugin from 'gsap/DrawSVGPlugin'
 import { type PropsWithChildren } from 'react'
-import { TextLG } from './components/Text'
-import { cn } from './lib/utils'
-import { SvgGpu } from './svgs/SvgGpu'
-import { SvgLitenode } from './svgs/SvgLitenode'
-import { SvgStorage } from './svgs/SvgStorage'
-import { SvgVerifynode } from './svgs/SvgVerifynode'
+import { TextLG } from '../components/Text'
+import { cn } from '../lib/utils'
+import { SvgGpu } from '../svgs/SvgGpu'
+import { SvgLitenode } from '../svgs/SvgLitenode'
+import { SvgStorage } from '../svgs/SvgStorage'
+import { SvgVerifynode } from '../svgs/SvgVerifynode'
 import iconGpu from "/gpu.svg"
 import iconListimage from "/listimage.svg"
 import iconLitenode from "/litenode.svg"
 import iconStorage from "/storage.svg"
 // import iconVerifynode from "/verifynode.svg"
-import { Button } from './components/ui/button'
+import { Button } from '../components/ui/button'
 import { FaArrowRight } from 'react-icons/fa6'
+import { useNavigate } from '@tanstack/react-router'
 gsap.registerPlugin(DrawSVGPlugin)
 function Line({ type = 'h', className }: { type?: 'v' | 'h', className?: string }) {
     return <div className={cn("shrink-0 bg-[#2E2E2E]", { "h-px w-full": type == 'h', "w-px h-full": type == "v" }, className)}></div>
@@ -28,7 +29,7 @@ function Li({ children }: PropsWithChildren) {
     </div>
 }
 export function Frame4() {
-
+    const nav = useNavigate()
     return <div className='w-full flex flex-col pt-25 items-center'>
         <Line className='root_anim_item' />
         <div className='flex flex-col px-4 py-10 gap-8 w-full'>
@@ -116,7 +117,7 @@ export function Frame4() {
                         <Li>8GB RAM, 500GB SSD</Li>
                         <Li>100Mbps internet</Li>
                     </ul> */}
-                    <Button variant="outline" size="lg" className='h-12 flex items-center gap-3 w-60 border-white/80 text-white'>Buy <FaArrowRight /></Button>
+                    <Button variant="outline" size="lg" className='h-12 flex items-center gap-3 w-60 border-white/80 text-white' onClick={() => nav({ to: '/purchase' })}>Buy <FaArrowRight /></Button>
                 </div>
                 <SvgVerifynode className='root_anim_item' />
             </div>

@@ -3,9 +3,9 @@ import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
-import Particles from "./components/Particles";
-import { TextLG } from "./components/Text";
-import { cn } from "./lib/utils";
+import Particles from "../components/Particles";
+import { TextLG } from "../components/Text";
+import { cn } from "../lib/utils";
 import currentUrl from '/roadmapcurrent.svg';
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(ScrollToPlugin)

@@ -1,16 +1,16 @@
 // import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type ReactNode } from "react";
 import { proxy, useSnapshot } from 'valtio';
-import { TextLG } from "./components/Text";
-import { cn } from "./lib/utils";
+import { TextLG } from "../components/Text";
+import { cn } from "../lib/utils";
 
 import { AnimatePresence, motion } from "motion/react";
-import AnimStep1 from "./anims/AnimStep1";
-import AnimStep2 from "./anims/AnimStep2";
-import { AnimStep3 } from "./anims/AnimStep3";
-import { AnimStep4 } from "./anims/AnimStep4";
+import AnimStep1 from "../anims/AnimStep1";
+import AnimStep2 from "../anims/AnimStep2";
+import { AnimStep3 } from "../anims/AnimStep3";
+import { AnimStep4 } from "../anims/AnimStep4";
 import arrowRight from '/arrowright.svg';
-import { useIsMobile } from "./hooks/useIsMobile";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 type Step = {
     step: 1 | 2 | 3 | 4;
@@ -86,7 +86,7 @@ export function Frame2() {
     const isMobile = useIsMobile()
     return <div className="flex flex-col w-full">
         {isMobile ?
-            <div className="flex flex-col w-full md:hidden">
+            <div className="flex flex-col w-full">
                 {steps.map(data => <div key={`step_${data.step}`}
                     className="w-full">
                     <div style={{ background: 'linear-gradient(180deg, #FA8B16 0%, #FFC144 100%)' }}
@@ -100,7 +100,7 @@ export function Frame2() {
             </div>
             : <div id={"frame2-step"}
                 style={{ background: 'linear-gradient(180deg, #FA8B16 0%, #FFC144 100%)' }}
-                className="root_anim_item w-screen h-screen max-h-200 hidden md:flex">
+                className="root_anim_item w-screen h-screen max-h-200 flex">
                 <div
                     className=" h-full flex justify-end items-center w-full basis-[637px] flex-1">
                     <div className="w-full max-w-[637px] relative">

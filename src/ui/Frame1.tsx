@@ -1,10 +1,9 @@
-import { AnimSAC } from "./anims/AnimSAC";
-import CountUp from "./components/CountUp";
-import Particles from "./components/Particles";
-import { TextLG } from "./components/Text";
-import TextType from "./components/TextType";
-import { Button } from "./components/ui/button";
-import { Header } from "./Header";
+import { AnimSAC } from "../anims/AnimSAC";
+import CountUp from "../components/CountUp";
+import Particles from "../components/Particles";
+import { TextLG } from "../components/Text";
+import TextType from "../components/TextType";
+import { Button } from "../components/ui/button";
 
 export function Frame1() {
     const renderNumber = (title: string, num: number, suffix: string) => {
@@ -20,11 +19,10 @@ export function Frame1() {
     return (
         <div className="w-full md:min-h-screen relative pt-18 md:pt-25">
             <Particles particleBaseSize={6} speed={0.1} particleSpread={40} sizeRandomness={2} className="absolute left-0 top-0 z-0 opacity-50" />
-            <Header />
             <div className="flex flex-col w-full max-w-[1440px] mx-auto px-4 pb-20 relative z-10 gap-5 md:gap-0">
                 <div className="root_anim_item flex flex-col w-full items-center md:items-start max-w-2xl gap-3 md:gap-12 py-8 md:py-20 font-lexend relative z-10">
                     <div className="opacity-60 text-3xl md:text-6xl font-medium">Strategy A Crust</div>
-                    <div className="font-semibold text-4xl md:text-7xl flex items-center gap-8">
+                    <div className="font-semibold text-4xl md:text-7xl flex items-center gap-4 md:gap-8">
                         <TextType text={['The Biggest', 'Decentralized']} />
                         <TextLG text="AI." />
                     </div>

@@ -1,8 +1,10 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import DrawSVGPlugin from "gsap/DrawSVGPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
 gsap.registerPlugin(DrawSVGPlugin);
+gsap.registerPlugin(ScrollTrigger);
 
 export function useDrawItem() {
   const scope = useRef<SVGSVGElement>(null);
@@ -18,4 +20,14 @@ export function useDrawItem() {
     { scope }
   );
   return scope;
+}
+
+export function useRootAnim() {
+  useGSAP(() => {
+    ScrollTrigger.batch(".root_anim_item", {
+      onEnter: (targets) => {
+        gsap.fromTo(targets, { y: 200, opacity: 0.2 }, { y: 0, opacity: 1, duration: 1, ease: "back.out(1.7)", stagger: 0.2 });
+      },
+    });
+  }, {});
 }

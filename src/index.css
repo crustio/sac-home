@@ -56,6 +56,7 @@ body {
   --color-sidebar-ring: var(--sidebar-ring);
   --font-lexend: "Lexend", sans-serif;
   --font-poppins: "Poppins", sans-serif;
+  --background-image-l1: linear-gradient(180deg, #FA8B16 0%, #FA6D16 100%);
 }
 
 :root {
