@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import { motion } from 'motion/react'
 import { useMemo, useState } from 'react'
 
@@ -9,6 +10,15 @@ function useHoverHelp() {
         onHoverStart: () => setHover(true),
         onHoverEnd: () => setHover(false),
     }), [setHover, isHover])
+}
+
+
+
+function HoverText({ aligen = 'left' }: { aligen?: 'left' | 'right' }) {
+    return <div className={cn('flex flex-col', aligen == 'left' ? 'items-start' : 'items-end -translate-x-full')}>
+        <div className='uppercase'>LITENODES</div>
+        <div className=''></div>
+    </div>
 }
 export function AnimModular() {
     const hoverG1 = useHoverHelp()
