@@ -1,3 +1,4 @@
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { cn } from '@/lib/utils'
 import { motion } from 'motion/react'
 import { useMemo, useState } from 'react'
@@ -12,12 +13,34 @@ function useHoverHelp() {
     }), [setHover, isHover])
 }
 
-
-
-function HoverText({ aligen = 'left' }: { aligen?: 'left' | 'right' }) {
-    return <div className={cn('flex flex-col', aligen == 'left' ? 'items-start' : 'items-end -translate-x-full')}>
-        <div className='uppercase'>LITENODES</div>
-        <div className=''></div>
+function TooltipItem({ aligen = 'left', tit, desc, delay, isHover }: { aligen?: 'left' | 'right', tit: string, desc?: string, delay?: number, isHover?: boolean }) {
+    const [open, setOpen] = useState(false)
+    return <div className={cn('flex flex-col gap-5 opacity-60', aligen == 'left' ? 'items-start' : 'items-end -translate-x-full')}>
+        <div onClick={() => setOpen(true)} className={cn('uppercase cursor-pointer font-lexend text-center whitespace-pre-wrap md:whitespace-nowrap  relative px-6 py-2.5 text-5xl md:px-2.5 md:py-1 md:text-xl', desc ? 'text-[#FFC144]' : 'text-white')}>
+            {tit}
+            <div className={cn(desc ? 'bg-[#FFC144]' : 'bg-white', 'absolute w-3.5 h-1 md:w-1.5 md:h-0.5 left-1  md:left-0.5  top-0',)} />
+            <div className={cn(desc ? 'bg-[#FFC144]' : 'bg-white', 'absolute w-3.5 h-1 md:w-1.5 md:h-0.5 left-1  md:left-0.5  bottom-0',)} />
+            <div className={cn(desc ? 'bg-[#FFC144]' : 'bg-white', 'absolute w-3.5 h-1 md:w-1.5 md:h-0.5 right-1 md:right-0.5 top-0',)} />
+            <div className={cn(desc ? 'bg-[#FFC144]' : 'bg-white', 'absolute w-3.5 h-1 md:w-1.5 md:h-0.5 right-1 md:right-0.5 bottom-0',)} />
+            <div className={cn(desc ? 'bg-[#FFC144]' : 'bg-white', 'absolute h-3.5 w-1 md:h-1.5 md:w-0.5 left-0  top-1      md:top-0.5',)} />
+            <div className={cn(desc ? 'bg-[#FFC144]' : 'bg-white', 'absolute h-3.5 w-1 md:h-1.5 md:w-0.5 left-0  bottom-1   md:bottom-0.5',)} />
+            <div className={cn(desc ? 'bg-[#FFC144]' : 'bg-white', 'absolute h-3.5 w-1 md:h-1.5 md:w-0.5 right-0 top-1      md:top-0.5',)} />
+            <div className={cn(desc ? 'bg-[#FFC144]' : 'bg-white', 'absolute h-3.5 w-1 md:h-1.5 md:w-0.5 right-0 bottom-1   md:bottom-0.5',)} />
+        </div>
+        {isHover && Boolean(desc) && <motion.div
+            initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}
+            style={{ background: 'linear-gradient(180deg, #090909 0%, rgba(0, 0, 0, 0) 100%)' }}
+            className='rounded-xl p-4 w-75 whitespace-pre-wrap border border-gray-50/30 text-sm hidden md:block'>{desc}</motion.div>}
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle className='uppercase text-[#FFC144]'>{tit}</DialogTitle>
+                    <DialogDescription>
+                        {desc}
+                    </DialogDescription>
+                </DialogHeader>
+            </DialogContent>
+        </Dialog>
     </div>
 }
 export function AnimModular() {
@@ -40,61 +63,46 @@ export function AnimModular() {
                 <use href="#box_black_fg" />
             </motion.g>
             {/* LITENODES */}
-            <path opacity="0.6" d="M1044 1523L1234 1608" stroke="#FFC144" stroke-width="2" stroke-linecap="round" />
-            <g opacity="0.6" transform="translate(1247,1595)">
-                <use href="#text_focus_l" x="0" y="0" />
-                <use href="#text_focus_l" transform="rotate(180,0,0)" x="-135" y="-31.5" />
-                <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">LITENODES</text>
-                {hoverG1.isHover && <motion.g initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }}>
-                    <use href="#text_bg" x="5" y="50" />
-                    <text fill="#fff" fontFamily="Poppins" fontSize="14" transform="translate(20,60)">
-                        <tspan x="0" dy="1.5em">A plug-and-play hardware device</tspan>
-                        <tspan x="0" dy="1.5em">designed to lower the entry barrier, </tspan>
-                        <tspan x="0" dy="1.5em">significantly increase node </tspan>
-                        <tspan x="0" dy="1.5em">participation, and strengthen network</tspan>
-                        <tspan x="0" dy="1.5em">decentralization</tspan>
-                    </text>
-                </motion.g>}
-            </g>
+            <path opacity="0.6" d="M1044 1523L1204 1608" stroke="#FFC144" strokeWidth="2" strokeLinecap="round" />
+            <foreignObject x={1217} y={1595} className='overflow-visible'>
+                <TooltipItem
+                    isHover={hoverG1.isHover}
+                    tit='litenodes'
+                    desc='A plug-and-play hardware device designed to lower the entry barrier, significantly increase node participation, and strengthen network decentralization'
+                />
+            </foreignObject>
+
             {/* STORAGENODES */}
-            <path opacity="0.6" d="M794 1607L994 1697" stroke="#FFC144" stroke-width="2" stroke-linecap="round" />
-            <g opacity="0.6" transform="translate(950,1700)">
-                <use href="#text_focus_l" x="0" y="0" />
-                <use href="#text_focus_l" transform="rotate(180,0,0)" x="-185" y="-31.5" />
-                <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">STORAGENODES</text>
-                {hoverG1.isHover && <motion.g initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-                    <use href="#text_bg" x="5" y="50" transform='scale(0.9)' />
-                    <text fill="#fff" fontFamily="Poppins" fontSize="14" transform="translate(20,60)">
-                        <tspan x="0" dy="1.5em">Robust servers handling data </tspan>
-                        <tspan x="0" dy="1.5em">redundancy and retrieval, ensuring </tspan>
-                        <tspan x="0" dy="1.5em">permanent, verifiable storage</tspan>
-                    </text>
-                </motion.g>}
-            </g>
+            <path opacity="0.6" d="M794 1607L994 1697" stroke="#FFC144" strokeWidth="2" strokeLinecap="round" />
+            <foreignObject x={950} y={1700} className='overflow-visible'>
+                <TooltipItem
+                    delay={0.1}
+                    isHover={hoverG1.isHover}
+                    tit='STORAGENODES'
+                    desc='Robust servers handling data redundancy and retrieval, ensuring permanent, verifiable storage'
+                />
+            </foreignObject>
 
             {/*  GPUNODES */}
-            <path opacity="0.6" d="M530 1516L330 1606" stroke="#FFC144" stroke-width="2" stroke-linecap="round" />
-            <g opacity="0.6" transform="translate(190,1590)">
-                <use href="#text_focus_l" x="0" y="0" />
-                <use href="#text_focus_l" transform="rotate(180,0,0)" x="-135" y="-31.5" />
-                <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">GPUNODES</text>
-                {hoverG1.isHover && <motion.g initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-                    <use href="#text_bg" x="-175" y="50" />
-                    <text fill="#fff" fontFamily="Poppins" fontSize="14" transform="translate(115,60)" textAnchor='end'>
-                        <tspan x="0" dy="1.5em">High-performance hardware nodes</tspan>
-                        <tspan x="0" dy="1.5em">dedicated to AI compute, enabling</tspan>
-                        <tspan x="0" dy="1.5em">efficient, elastic inference</tspan>
-                    </text>
-                </motion.g>}
-            </g>
+            <path opacity="0.6" d="M530 1516L330 1606" stroke="#FFC144" strokeWidth="2" strokeLinecap="round" />
+            <foreignObject x={190} y={1590} className='overflow-visible'>
+                <TooltipItem
+                    delay={0.2}
+                    isHover={hoverG1.isHover}
+                    tit='GPUNODES'
+                    desc='High-performance hardware nodes dedicated to AI compute, enabling efficient, elastic inference'
+                />
+            </foreignObject>
 
             {/* HARDWARE */}
-            <path d="M330 1296L530 1386" stroke="#5A5A5A" stroke-width="2" stroke-linecap="round" />
-            <g transform="translate(190,1280)">
-                <use href="#text_focus_l_5A5A5A" x="0" y="0" />
-                <use href="#text_focus_l_5A5A5A" transform="rotate(180,0,0)" x="-135" y="-31.5" />
-                <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#5A5A5A">HARDWARE</text>
-            </g>
+            <path d="M370 1296L530 1386" stroke="#5A5A5A" strokeWidth="2" strokeLinecap="round" />
+            <foreignObject x={365} y={1276} className='overflow-visible'>
+                <TooltipItem
+                    isHover={hoverG1.isHover}
+                    tit='HARDWARE'
+                    aligen='right'
+                />
+            </foreignObject>
 
         </g>
         <g className="root_anim_item">
@@ -107,46 +115,36 @@ export function AnimModular() {
                 <use href="#box_black_fg" transform="translate(0,-380)" />
             </motion.g>
             {/* STORAGE NETWORK */}
-            <path opacity="0.6" d="M1064 1141L1234 1211" stroke="#FFC144" stroke-width="2" stroke-linecap="round" />
-            <g opacity="0.6" transform="translate(1247,1195)">
-                <use href="#text_focus_l" x="0" y="0" />
-                <use href="#text_focus_l" transform="rotate(180,0,0)" x="-225" y="-31.5" />
-                <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">STORAGE NETWORK</text>
-                {hoverG2.isHover && <motion.g initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }}>
-                    <use href="#text_bg" x="5" y="50" />
-                    <text fill="#fff" fontFamily="Poppins" fontSize="14" transform="translate(20,60)">
-                        <tspan x="0" dy="1.5em">Crust-based decentralized storage, </tspan>
-                        <tspan x="0" dy="1.5em">providing redundant, privacy-focused  </tspan>
-                        <tspan x="0" dy="1.5em">data availability for AI inputs and </tspan>
-                        <tspan x="0" dy="1.5em">models</tspan>
-                    </text>
-                </motion.g>}
-            </g>
+            <path opacity="0.6" d="M1064 1141L1234 1211" stroke="#FFC144" strokeWidth="2" strokeLinecap="round" />
+            <foreignObject x={1247} y={1195} className='overflow-visible'>
+                <TooltipItem
+                    delay={0}
+                    isHover={hoverG2.isHover}
+                    tit='STORAGE NETWORK'
+                    desc='Crust-based decentralized storage, providing redundant, privacy-focused data availability for AI inputs and models'
+                />
+            </foreignObject>
 
             {/* COMPUTE NETWORK */}
-            <path opacity="0.6" d="M824 1236L1158.5 1379" stroke="#FFC144" stroke-width="2" stroke-linecap="round" />
-            <g opacity="0.6" transform="translate(1160,1365)">
-                <use href="#text_focus_l" x="0" y="0" />
-                <use href="#text_focus_l" transform="rotate(180,0,0)" x="-225" y="-31.5" />
-                <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">COMPUTE NETWORK</text>
-                {hoverG2.isHover && <motion.g initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-                    <use href="#text_bg" x="5" y="50" />
-                    <text fill="#fff" fontFamily="Poppins" fontSize="14" transform="translate(20,60)">
-                        <tspan x="0" dy="1.5em">Distributed AI inference layer optimized </tspan>
-                        <tspan x="0" dy="1.5em">for lightweight tasks, dynamically </tspan>
-                        <tspan x="0" dy="1.5em">scaling GPU resources for high TPS </tspan>
-                        <tspan x="0" dy="1.5em">without central bottlenecks</tspan>
-                    </text>
-                </motion.g>}
-            </g>
+            <path opacity="0.6" d="M824 1236L1158.5 1379" stroke="#FFC144" strokeWidth="2" strokeLinecap="round" />
+            <foreignObject x={1160} y={1365} className='overflow-visible'>
+                <TooltipItem
+                    delay={0.1}
+                    isHover={hoverG2.isHover}
+                    tit='COMPUTE NETWORK'
+                    desc='Distributed AI inference layer optimized for lightweight tasks, dynamically scaling GPU resources for high TPS without central bottlenecks'
+                />
+            </foreignObject>
 
             {/* PROTOCOL */}
-            <path d="M330 935L530 1025" stroke="#5A5A5A" stroke-width="2" stroke-linecap="round" />
-            <g transform="translate(190,920)">
-                <use href="#text_focus_l_5A5A5A" x="0" y="0" />
-                <use href="#text_focus_l_5A5A5A" transform="rotate(180,0,0)" x="-135" y="-31.5" />
-                <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#5A5A5A">PROTOCOL</text>
-            </g>
+            <path d="M350 935L530 1025" stroke="#5A5A5A" strokeWidth="2" strokeLinecap="round" />
+            <foreignObject x={345} y={915} className='overflow-visible'>
+                <TooltipItem
+                    isHover={hoverG2.isHover}
+                    tit='PROTOCOL'
+                    aligen='right'
+                />
+            </foreignObject>
 
         </g>
         <g className="root_anim_item">
@@ -159,30 +157,25 @@ export function AnimModular() {
             </motion.g>
 
             {/* Blockchain */}
-            <path opacity="0.6" d="M854 835L1144 965" stroke="#FFC144" stroke-width="2" stroke-linecap="round" />
-            <g opacity="0.6" transform="translate(1147,950)">
-                <use href="#text_focus_l" x="0" y="0" />
-                <use href="#text_focus_l" transform="rotate(180,0,0)" x="-155" y="-31.5" />
-                <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">BLOCKCHAIN</text>
-                {hoverG3.isHover && <motion.g initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }}>
-                    <use href="#text_bg" x="5" y="50" />
-                    <text fill="#fff" fontFamily="Poppins" fontSize="14" transform="translate(20,60)">
-                        <tspan x="0" dy="1.5em">SAC's foundational layer for trustless</tspan>
-                        <tspan x="0" dy="1.5em">transactions, where work reports </tspan>
-                        <tspan x="0" dy="1.5em">generated by the compute and storage </tspan>
-                        <tspan x="0" dy="1.5em">networks form the consensus mechanism </tspan>
-                        <tspan x="0" dy="1.5em">and incentivize network operations</tspan>
-                    </text>
-                </motion.g>}
-            </g>
+            <path opacity="0.6" d="M854 835L1144 965" stroke="#FFC144" strokeWidth="2" strokeLinecap="round" />
+            <foreignObject x={1147} y={950} className='overflow-visible'>
+                <TooltipItem
+                    delay={0}
+                    isHover={hoverG3.isHover}
+                    tit='BLOCKCHAIN'
+                    desc={`SAC's foundational layer for trustless transactions, where work reports generated by the compute and storage networks form the consensus mechanism and incentivize network operations`}
+                />
+            </foreignObject>
 
             {/* Consensus */}
-            <path d="M330 555L530 645" stroke="#5A5A5A" stroke-width="2" stroke-linecap="round" />
-            <g transform="translate(180,540)">
-                <use href="#text_focus_l_5A5A5A" x="0" y="0" />
-                <use href="#text_focus_l_5A5A5A" transform="rotate(180,0,0)" x="-145" y="-31.5" />
-                <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#5A5A5A">CONSENSUS</text>
-            </g>
+            <path d="M380 555L530 645" stroke="#5A5A5A" strokeWidth="2" strokeLinecap="round" />
+            <foreignObject x={375} y={535} className='overflow-visible'>
+                <TooltipItem
+                    isHover={hoverG2.isHover}
+                    tit='CONSENSUS'
+                    aligen='right'
+                />
+            </foreignObject>
 
         </g>
         <g className="root_anim_item">
@@ -200,22 +193,15 @@ export function AnimModular() {
                 onHoverStart={hoverG4.onHoverStart} onHoverEnd={hoverG4.onHoverEnd}>
                 <use href="#box_orange" />
                 {/* DATA VERIFICATION */}
-                <path opacity="0.6" d="M958 344L1171.5 269" stroke="#FFC144" stroke-width="2" stroke-linecap="round" />
-                <g opacity="0.6" transform="translate(1177,250)">
-                    <use href="#text_focus_l" x="0" y="0" />
-                    <use href="#text_focus_l" transform="rotate(180,0,0)" x="-230" y="-31.5" />
-                    <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">DATA VERIFICATION</text>
-                    {hoverG4.isHover && <motion.g initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }}>
-                        <use href="#text_bg" x="5" y="50" />
-                        <text fill="#fff" fontFamily="Poppins" fontSize="14" transform="translate(20,60)">
-                            <tspan x="0" dy="1.5em">Upgrade LiteNodes with license to</tspan>
-                            <tspan x="0" dy="1.5em">participate in the Verification Network,</tspan>
-                            <tspan x="0" dy="1.5em">enabling validation of data integrity </tspan>
-                            <tspan x="0" dy="1.5em">and AI outputs through consensus,</tspan>
-                            <tspan x="0" dy="1.5em">ensuring tamper-proof trustworthiness.</tspan>
-                        </text>
-                    </motion.g>}
-                </g>
+                <path opacity="0.6" d="M958 344L1121.5 269" stroke="#FFC144" strokeWidth="2" strokeLinecap="round" />
+                <foreignObject x={1127} y={250} className='overflow-visible'>
+                    <TooltipItem
+                        delay={0}
+                        isHover={hoverG4.isHover}
+                        tit='DATA VERIFICATION'
+                        desc={`Upgrade LiteNodes with license to participate in the Verification Network,enabling validation of data integrity and AI outputs through consensus,ensuring tamper-proof trustworthiness.`}
+                    />
+                </foreignObject>
             </motion.g>
         </g>
         <g className='root_anim_item cursor-pointer'>
@@ -223,20 +209,16 @@ export function AnimModular() {
                 onHoverStart={hoverG5.onHoverStart} onHoverEnd={hoverG5.onHoverEnd}>
                 <use href="#box_orange" transform="translate(0,-121)" />
                 {/* Service Market */}
-                <path opacity="0.6" d="M349 137L592.5 242" stroke="#FFC144" stroke-width="2" stroke-linecap="round" />
-                <g opacity="0.6" transform="translate(150,120)">
-                    <use href="#text_focus_l" x="0" y="0" />
-                    <use href="#text_focus_l" transform="rotate(180,0,0)" x="-195" y="-31.5" />
-                    <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">SERVICE MARKET</text>
-                    {hoverG5.isHover && <motion.g initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-                        <use href="#text_bg" x="-115" y="50" />
-                        <text fill="#fff" fontFamily="Poppins" fontSize="14" transform="translate(175,60)" textAnchor='end'>
-                            <tspan x="0" dy="1.5em">High-performance hardware nodes</tspan>
-                            <tspan x="0" dy="1.5em">dedicated to AI compute, enabling</tspan>
-                            <tspan x="0" dy="1.5em">efficient, elastic inference</tspan>
-                        </text>
-                    </motion.g>}
-                </g>
+                <path opacity="0.6" d="M349 137L592.5 242" stroke="#FFC144" strokeWidth="2" strokeLinecap="round" />
+                <foreignObject x={344} y={117} className='overflow-visible'>
+                    <TooltipItem
+                        delay={0}
+                        isHover={hoverG5.isHover}
+                        aligen='right'
+                        tit='SERVICE MARKET'
+                        desc={`High-performance hardware nodes dedicated to AI compute, enabling efficient, elastic inference`}
+                    />
+                </foreignObject>
 
             </motion.g>
         </g>
@@ -245,150 +227,144 @@ export function AnimModular() {
                 onHoverStart={hoverG6.onHoverStart} onHoverEnd={hoverG6.onHoverEnd}>
                 <use href="#box_orange" transform="translate(0,-220)" />
                 {/* AI Applications  */}
-                <path opacity="0.6" d="M958 111L1171 36" stroke="#FFC144" stroke-width="2" stroke-linecap="round" />
-                <g opacity="0.6" transform="translate(1177,20)">
-                    <use href="#text_focus_l" x="0" y="0" />
-                    <use href="#text_focus_l" transform="rotate(180,0,0)" x="-200" y="-31.5" />
-                    <text x="10" y="23" fontFamily="Lexend" fontSize="20" fill="#FFC144">AI APPLICATIONS</text>
-                    {hoverG6.isHover && <motion.g initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }}>
-                        <use href="#text_bg" x="5" y="50" />
-                        <text fill="#fff" fontFamily="Poppins" fontSize="14" transform="translate(20,60)">
-                            <tspan x="0" dy="1.5em">Layer for deploying decentralized AI </tspan>
-                            <tspan x="0" dy="1.5em">dApps, enabling seamless integration </tspan>
-                            <tspan x="0" dy="1.5em">of models for real-world use cases </tspan>
-                            <tspan x="0" dy="1.5em">like inference and analytics.</tspan>
-                        </text>
-                    </motion.g>}
-                </g>
+                <path opacity="0.6" d="M958 111L1121 36" stroke="#FFC144" strokeWidth="2" strokeLinecap="round" />
+                <foreignObject x={1127} y={20} className='overflow-visible'>
+                    <TooltipItem
+                        delay={0}
+                        isHover={hoverG6.isHover}
+                        tit='AI APPLICATIONS'
+                        desc={`Layer for deploying decentralized AI dApps, enabling seamless integration of models for real-world use cases like inference and analytics.`}
+                    />
+                </foreignObject>
             </motion.g>
         </g>
 
         <defs>
             <linearGradient id="paint0_linear_34_2" x1="1122" y1="1556.53" x2="442.003" y2="1552.24" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#505050" stop-opacity="0.5" />
-                <stop offset="0.508226" stop-color="#383838" stop-opacity="0.3" />
-                <stop offset="1" stop-color="#505050" stop-opacity="0.41" />
+                <stop stopColor="#505050" stopOpacity="0.5" />
+                <stop offset="0.508226" stopColor="#383838" stopOpacity="0.3" />
+                <stop offset="1" stopColor="#505050" stopOpacity="0.41" />
             </linearGradient>
             <linearGradient id="paint1_linear_34_2" x1="1103.52" y1="1583.91" x2="807.871" y2="1582.05" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#4D1600" />
-                <stop offset="0.508226" stop-opacity="0.3" />
-                <stop offset="1" stop-color="#FB7C00" stop-opacity="0.3" />
+                <stop stopColor="#4D1600" />
+                <stop offset="0.508226" stopOpacity="0.3" />
+                <stop offset="1" stopColor="#FB7C00" stopOpacity="0.3" />
             </linearGradient>
             <linearGradient id="paint2_linear_34_2" x1="807.868" y1="1597.7" x2="1103.53" y2="1597.7" gradientUnits="userSpaceOnUse">
-                <stop offset="0.37" stop-color="#D98B27" stop-opacity="0" />
-                <stop offset="0.504736" stop-color="#D97F1C" />
-                <stop offset="0.643041" stop-color="#D98B27" stop-opacity="0" />
+                <stop offset="0.37" stopColor="#D98B27" stopOpacity="0" />
+                <stop offset="0.504736" stopColor="#D97F1C" />
+                <stop offset="0.643041" stopColor="#D98B27" stopOpacity="0" />
             </linearGradient>
 
             <linearGradient id="paint3_linear_34_2" x1="807.87" y1="1553.32" x2="1103.52" y2="1553.32" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FF8B10" />
-                <stop offset="1" stop-color="#F74503" />
+                <stop stopColor="#FF8B10" />
+                <stop offset="1" stopColor="#F74503" />
             </linearGradient>
             <linearGradient id="paint4_linear_34_2" x1="1102.45" y1="1526.38" x2="1082.22" y2="1526.38" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FF6D2F" />
-                <stop offset="1" stop-color="#F84A04" />
+                <stop stopColor="#FF6D2F" />
+                <stop offset="1" stopColor="#F84A04" />
             </linearGradient>
             <linearGradient id="paint5_linear_34_2" x1="825.609" y1="1526.58" x2="808.945" y2="1526.59" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FF9D41" stop-opacity="0" />
-                <stop offset="1" stop-color="#FFB851" />
+                <stop stopColor="#FF9D41" stopOpacity="0" />
+                <stop offset="1" stopColor="#FFB851" />
             </linearGradient>
             <linearGradient id="paint6_linear_34_2" x1="807.868" y1="1551.57" x2="1103.53" y2="1551.57" gradientUnits="userSpaceOnUse">
-                <stop offset="0.37" stop-color="#FC720B" />
-                <stop offset="0.49713" stop-color="#FFA91B" />
-                <stop offset="0.653024" stop-color="#F95907" />
+                <stop offset="0.37" stopColor="#FC720B" />
+                <stop offset="0.49713" stopColor="#FFA91B" />
+                <stop offset="0.653024" stopColor="#F95907" />
             </linearGradient>
             <linearGradient id="paint7_linear_34_2" x1="955.696" y1="1455.22" x2="955.696" y2="1583.1" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FFC144" />
-                <stop offset="1" stop-color="#FA8B16" />
+                <stop stopColor="#FFC144" />
+                <stop offset="1" stopColor="#FA8B16" />
             </linearGradient>
             <linearGradient id="paint8_linear_34_2" x1="955.696" y1="1455.22" x2="955.696" y2="1583.1" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FF8B10" />
-                <stop offset="1" stop-color="#F66F00" />
+                <stop stopColor="#FF8B10" />
+                <stop offset="1" stopColor="#F66F00" />
             </linearGradient>
             <linearGradient id="paint24_linear_34_2" x1="441.996" y1="1673.25" x2="1122.01" y2="1673.25" gradientUnits="userSpaceOnUse">
-                <stop offset="0.37" stop-color="#595959" stop-opacity="0" />
-                <stop offset="0.504736" stop-color="#494949" stop-opacity="0.2" />
-                <stop offset="0.642982" stop-color="#595959" stop-opacity="0" />
+                <stop offset="0.37" stopColor="#595959" stopOpacity="0" />
+                <stop offset="0.504736" stopColor="#494949" stopOpacity="0.2" />
+                <stop offset="0.642982" stopColor="#595959" stopOpacity="0" />
             </linearGradient>
             <linearGradient id="paint25_linear_34_2" x1="442" y1="1484.86" x2="1122" y2="1484.86" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#212121" />
-                <stop offset="1" stop-color="#1C1C1C" />
+                <stop stopColor="#212121" />
+                <stop offset="1" stopColor="#1C1C1C" />
             </linearGradient>
             <linearGradient id="paint26_linear_34_2" x1="1122" y1="1439.02" x2="1075.48" y2="1439.02" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#282828" />
-                <stop offset="1" stop-color="#1D1D1D" />
+                <stop stopColor="#282828" />
+                <stop offset="1" stopColor="#1D1D1D" />
             </linearGradient>
             <linearGradient id="paint27_linear_34_2" x1="488.53" y1="1439.47" x2="442" y2="1439.47" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#222222" />
-                <stop offset="1" stop-color="#393939" />
+                <stop stopColor="#222222" />
+                <stop offset="1" stopColor="#393939" />
             </linearGradient>
             <linearGradient id="paint28_linear_34_2" x1="441.996" y1="1484.25" x2="1122.01" y2="1484.25" gradientUnits="userSpaceOnUse">
-                <stop offset="0.37" stop-color="#202020" />
-                <stop offset="0.49519" stop-color="#373737" />
-                <stop offset="0.68" stop-color="#181818" />
+                <stop offset="0.37" stopColor="#202020" />
+                <stop offset="0.49519" stopColor="#373737" />
+                <stop offset="0.68" stopColor="#181818" />
             </linearGradient>
             <linearGradient id="paint29_linear_34_2" x1="782" y1="1250.37" x2="781.998" y2="1549.25" gradientUnits="userSpaceOnUse">
                 <stop />
-                <stop offset="1" stop-color="#353535" />
+                <stop offset="1" stopColor="#353535" />
             </linearGradient>
             <linearGradient id="paint30_linear_34_2" x1="781.998" y1="1271.44" x2="781.998" y2="1549.25" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#0E0E0E" stop-opacity="0" />
-                <stop offset="1" stop-color="#7B7B7B" />
+                <stop stopColor="#0E0E0E" stopOpacity="0" />
+                <stop offset="1" stopColor="#7B7B7B" />
             </linearGradient>
 
             <linearGradient id="paint69_linear_34_2" x1="719" y1="462" x2="659" y2="641" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#391E00" />
-                <stop offset="1" stop-color="#272727" stop-opacity="0.05" />
+                <stop stopColor="#391E00" />
+                <stop offset="1" stopColor="#272727" stopOpacity="0.05" />
             </linearGradient>
             <linearGradient id="paint70_linear_34_2" x1="855" y1="445" x2="903.5" y2="616.5" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#512B00" />
-                <stop offset="1" stop-color="#272727" stop-opacity="0.05" />
+                <stop stopColor="#512B00" />
+                <stop offset="1" stopColor="#272727" stopOpacity="0.05" />
             </linearGradient>
             <linearGradient id="paint71_linear_34_2" x1="507" y1="421.737" x2="1057" y2="421.737" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#101010" />
-                <stop offset="1" stop-color="#212121" />
+                <stop stopColor="#101010" />
+                <stop offset="1" stopColor="#212121" />
             </linearGradient>
             <linearGradient id="paint72_linear_34_2" x1="1057" y1="378.622" x2="1019.38" y2="378.622" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#1D1D1D" />
-                <stop offset="1" stop-color="#202020" />
+                <stop stopColor="#1D1D1D" />
+                <stop offset="1" stopColor="#202020" />
             </linearGradient>
             <linearGradient id="paint73_linear_34_2" x1="506.997" y1="421.852" x2="1057.01" y2="421.852" gradientUnits="userSpaceOnUse">
-                <stop offset="0.37" stop-color="#161616" />
-                <stop offset="0.501789" stop-color="#232323" />
-                <stop offset="0.68" stop-color="#181818" />
+                <stop offset="0.37" stopColor="#161616" />
+                <stop offset="0.501789" stopColor="#232323" />
+                <stop offset="0.68" stopColor="#181818" />
             </linearGradient>
             <linearGradient id="paint74_linear_34_2" x1="781.999" y1="230" x2="781.999" y2="467.888" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#2A2A2A" />
-                <stop offset="1" stop-color="#0D0D0D" />
+                <stop stopColor="#2A2A2A" />
+                <stop offset="1" stopColor="#0D0D0D" />
             </linearGradient>
             <linearGradient id="paint75_linear_34_2" x1="782" y1="320.5" x2="787.648" y2="464.779" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FA8B16" />
-                <stop offset="1" stop-color="#F74503" />
+                <stop stopColor="#FA8B16" />
+                <stop offset="1" stopColor="#F74503" />
             </linearGradient>
             <linearGradient id="paint76_linear_34_2" x1="507" y1="432.737" x2="1057" y2="432.737" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FF8B10" />
-                <stop offset="1" stop-color="#F74503" />
+                <stop stopColor="#FF8B10" />
+                <stop offset="1" stopColor="#F74503" />
             </linearGradient>
             <linearGradient id="paint77_linear_34_2" x1="1055" y1="382.622" x2="1017.38" y2="382.622" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FF6D2F" />
-                <stop offset="1" stop-color="#F84A04" />
+                <stop stopColor="#FF6D2F" />
+                <stop offset="1" stopColor="#F84A04" />
             </linearGradient>
             <linearGradient id="paint78_linear_34_2" x1="540" y1="383" x2="509" y2="383.014" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FF9D41" stop-opacity="0" />
-                <stop offset="1" stop-color="#FFB851" />
+                <stop stopColor="#FF9D41" stopOpacity="0" />
+                <stop offset="1" stopColor="#FFB851" />
             </linearGradient>
             <linearGradient id="paint79_linear_34_2" x1="506.997" y1="430.852" x2="1057.01" y2="430.852" gradientUnits="userSpaceOnUse">
-                <stop offset="0.37" stop-color="#FC720B" />
-                <stop offset="0.49713" stop-color="#FFA91B" />
-                <stop offset="0.653024" stop-color="#F95907" />
+                <stop offset="0.37" stopColor="#FC720B" />
+                <stop offset="0.49713" stopColor="#FFA91B" />
+                <stop offset="0.653024" stopColor="#F95907" />
             </linearGradient>
             <linearGradient id="paint80_linear_34_2" x1="781.999" y1="231" x2="781.999" y2="468.888" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FFC144" />
-                <stop offset="1" stop-color="#FA8B16" />
+                <stop stopColor="#FFC144" />
+                <stop offset="1" stopColor="#FA8B16" />
             </linearGradient>
             <linearGradient id="paint81_linear_34_2" x1="781.999" y1="231" x2="781.999" y2="468.888" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FF8B10" />
-                <stop offset="1" stop-color="#F66F00" />
+                <stop stopColor="#FF8B10" />
+                <stop offset="1" stopColor="#F66F00" />
             </linearGradient>
 
             {/* box */}
@@ -421,25 +397,12 @@ export function AnimModular() {
             </g>
 
             <g id="box_orange">
-                <path d="M560.539 350.376V350.377L563.697 350.387H563.698L706.197 350.552L729.147 350.58L836.999 350.698L861.019 350.725L1004.51 350.887H1007.65L1019.37 350.903L1056 350.944V397.746C1055.85 400.446 1053.62 403.32 1048.52 405.643L1048.02 405.866L1018.98 418.424H1018.98L1008.3 423.044L860.629 486.907L803.725 511.524C797.549 514.195 788.979 515.392 780.088 515.117C771.206 514.841 762.112 513.1 754.907 509.989H754.906L706.602 489.086H706.601L555.738 423.835L545.034 419.205L519.549 408.181L518.822 407.859C515.247 406.239 512.572 404.444 510.777 402.616C508.862 400.665 508 398.737 508 396.967V350.319L560.539 350.376Z" fill="url(#paint76_linear_34_2)" stroke="#CB3B00" stroke-width="2" />
+                <path d="M560.539 350.376V350.377L563.697 350.387H563.698L706.197 350.552L729.147 350.58L836.999 350.698L861.019 350.725L1004.51 350.887H1007.65L1019.37 350.903L1056 350.944V397.746C1055.85 400.446 1053.62 403.32 1048.52 405.643L1048.02 405.866L1018.98 418.424H1018.98L1008.3 423.044L860.629 486.907L803.725 511.524C797.549 514.195 788.979 515.392 780.088 515.117C771.206 514.841 762.112 513.1 754.907 509.989H754.906L706.602 489.086H706.601L555.738 423.835L545.034 419.205L519.549 408.181L518.822 407.859C515.247 406.239 512.572 404.444 510.777 402.616C508.862 400.665 508 398.737 508 396.967V350.319L560.539 350.376Z" fill="url(#paint76_linear_34_2)" stroke="#CB3B00" strokeWidth="2" />
                 <path d="M1055 347.946V395.784C1054.82 399.154 1052 402.369 1046.42 404.783L1017.38 417.341V347.903L1054.99 347.946H1055H1055Z" fill="url(#paint77_linear_34_2)" />
                 <path opacity="0.5" d="M546.634 347.903V418.125L521.149 407.102C513.117 403.629 509 399.19 509 394.967V347.946H509.01L546.631 347.903H546.634Z" fill="url(#paint78_linear_34_2)" />
                 <path d="M861.023 347.721V485.824L804.118 510.441C791.404 515.942 769.198 515.25 754.508 508.907L706.201 488.004V347.546L729.151 347.572L837.003 347.691L861.023 347.718V347.721Z" fill="url(#paint79_linear_34_2)" />
-                <path d="M760.279 235.631C766.455 232.959 775.026 231.763 783.918 232.039C792.801 232.315 801.895 234.058 809.096 237.172L1044.45 338.974L1044.86 339.146C1048.26 340.657 1050.87 342.329 1052.71 344.042C1054.62 345.825 1055.65 347.606 1055.92 349.264C1056.45 352.439 1054.25 355.897 1048.02 358.593L803.718 464.257C797.542 466.928 788.971 468.125 780.079 467.849C771.196 467.573 762.102 465.83 754.901 462.716L519.543 360.918H519.542C515.943 359.361 513.197 357.626 511.288 355.846C509.377 354.063 508.352 352.281 508.077 350.624C507.55 347.449 509.75 343.991 515.981 341.295L760.279 235.631Z" fill="url(#paint80_linear_34_2)" stroke="url(#paint81_linear_34_2)" stroke-width="2" />
+                <path d="M760.279 235.631C766.455 232.959 775.026 231.763 783.918 232.039C792.801 232.315 801.895 234.058 809.096 237.172L1044.45 338.974L1044.86 339.146C1048.26 340.657 1050.87 342.329 1052.71 344.042C1054.62 345.825 1055.65 347.606 1055.92 349.264C1056.45 352.439 1054.25 355.897 1048.02 358.593L803.718 464.257C797.542 466.928 788.971 468.125 780.079 467.849C771.196 467.573 762.102 465.83 754.901 462.716L519.543 360.918H519.542C515.943 359.361 513.197 357.626 511.288 355.846C509.377 354.063 508.352 352.281 508.077 350.624C507.55 347.449 509.75 343.991 515.981 341.295L760.279 235.631Z" fill="url(#paint80_linear_34_2)" stroke="url(#paint81_linear_34_2)" strokeWidth="2" />
             </g>
-
-            {/* text */}
-            <linearGradient id="paint94_linear_34_2" gradientTransform="rotate(90)">
-                <stop offset="0%" stop-color="#090909" />
-                <stop offset="100%" stop-opacity="0" />
-            </linearGradient>
-            <linearGradient id="paint95_linear_34_2" gradientTransform="rotate(90)">
-                <stop offset="0%" stop-color="#666666" />
-                <stop offset="100%" stop-opacity="0" />
-            </linearGradient>
-            <path id="text_focus_l" d="M0 0.75V6 M0.75 0H6 M0 25.75V31 M0.75 31.75H6" fill="none" style={{ stroke: '#FFC144' }} strokeWidth="1.5" />
-            <path id="text_focus_l_5A5A5A" d="M0 0.75V6 M0.75 0H6 M0 25.75V31 M0.75 31.75H6" fill="none" style={{ stroke: '#5A5A5A' }} strokeWidth="1.5" />
-            <rect id="text_bg" width="309" height="149" rx="11.5" fill="url(#paint94_linear_34_2)" stroke="url(#paint95_linear_34_2)" />
         </defs>
     </svg>
 

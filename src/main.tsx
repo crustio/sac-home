@@ -9,8 +9,11 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 
 import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MotionConfig } from 'motion/react';
 import { routeTree } from './routeTree.gen';
+import { toastOnError } from './lib/mutils';
+import { toast, Toaster } from 'sonner';
 // Set up a Router instance
 const router = createRouter({
   routeTree,
@@ -28,11 +31,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+// query client
+const client = new QueryClient({
+  defaultOptions: {
+    queries: { staleTime: 1000, refetchOnMount: 'always' },
+    mutations: { onError: toastOnError, onSuccess: () => toast.success("Success") }
+  }
+})
 
 // eslint-disable-next-line react-refresh/only-export-components
 function Root() {
+
   return <MotionConfig transition={{ default: { duration: 0.5, ease: "backOut" } }}>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={client}>
+      <Toaster position='top-right' offset={{ top: 100, right: 20 }} />
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </MotionConfig>
 }
 

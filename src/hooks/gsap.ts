@@ -22,12 +22,16 @@ export function useDrawItem() {
   return scope;
 }
 
-export function useRootAnim() {
-  useGSAP(() => {
-    ScrollTrigger.batch(".root_anim_item", {
-      onEnter: (targets) => {
-        gsap.fromTo(targets, { y: 200, opacity: 0.2 }, { y: 0, opacity: 1, duration: 1, ease: "back.out(1.7)", stagger: 0.2 });
-      },
-    });
-  }, {});
+export function useRootAnim(dependencies: unknown[] = []) {
+  useGSAP(
+    (_ctx, ctxSafe) => {
+      if (ctxSafe) {
+        const onEnter = ctxSafe((targets: Element[]) => {
+          gsap.fromTo(targets, { y: 200, opacity: 0.2 }, { y: 0, opacity: 1, duration: 1, ease: "back.out(1.7)", stagger: 0.2 });
+        });
+        ScrollTrigger.batch(".root_anim_item", { onEnter });
+      }
+    },
+    { dependencies }
+  );
 }

@@ -1,13 +1,40 @@
+import { useMutation } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
+import { useState } from "react";
 import { Sosials } from "./Header";
 import logo from "/logo.svg";
+import axios from "axios";
 
-
+function validateEmail(e: string) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(e).toLowerCase());
+}
 function Subscribe() {
+    const [email, setEmail] = useState('')
+    const { mutate, isPending } = useMutation({
+        mutationKey: ['subByEmail', email],
+        mutationFn: async () => {
+            if (!validateEmail(email)) throw new Error("Email invalid!")
+            await axios.request({
+                url: "https://grcokzbzdqaurpyhccgw.supabase.co/functions/v1/SubscribeEmails",
+                method: 'POST',
+                data: { email },
+            })
+
+        },
+    })
     return <div className="flex flex-col gap-4 items-center md:items-start md:gap-5 w-full md:w-auto">
         <div className="font-lexend text-lg">Sign up for our newsletter</div>
         <div className="flex gap-4 items-center flex-col md:flex-row w-full md:w-auto">
-            <input className="h-12 w-full md:w-90 leading-12 px-4 whitespace-nowrap text-sm bg-[#181818] rounded-lg border border-[#232323] placeholder:opacity-60" placeholder="Please enter your email address" />
-            <button className="text-[#FA8B16] h-12 bg-[#181818] w-full md:w-auto rounded-lg border border-[#232323] hover:opacity-80 px-5 cursor-pointer">Subsribe</button>
+            <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="h-12 w-full md:w-90 leading-12 px-4 whitespace-nowrap text-sm bg-[#181818] rounded-lg border border-[#232323] placeholder:opacity-60" placeholder="Please enter your email address" />
+            <button onClick={() => mutate()} disabled={isPending || !email}
+                className="text-[#FA8B16] w-full h-12 bg-[#181818] md:w-40 shrink-0 rounded-lg border border-[#232323] hover:opacity-80 px-5 cursor-pointer flex justify-center items-center gap-2">
+                {isPending && <Loader className="animate-spin" />}
+                Subsribe
+            </button>
         </div>
     </div>
 }

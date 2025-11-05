@@ -19,6 +19,9 @@ import Counter from "@/components/Counter"
 import { useInterval } from "react-use"
 import { useIsMobile } from "@/hooks/useIsMobile"
 
+
+
+
 function Btn({ children, className }: PropsWithChildren<{ className?: string }>) {
     return <div className={cn("relative flex items-center py-4 px-8 font-semibold text-[1.375rem] cursor-pointer", className)}>
         <div style={{
@@ -117,6 +120,33 @@ function TimerDown({ end }: { end: number }) {
     </div>
 }
 
+
+function ABorder({ className }: { className?: string }) {
+    return <div className={cn('flex flex-col absolute w-full h-full left-0 top-0 text-[25px]', className)}>
+        <div className='flex items-start shrink-0'>
+            <svg className='shrink-0' width="1em" height="1em" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 0.5H11L0.5 11V25" stroke="white" />
+            </svg>
+            <div className='bg-white opacity-20 h-[0.04em] flex-1'></div>
+            <svg className='shrink-0 rotate-90' width="1em" height="1em" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 0.5H11L0.5 11V25" stroke="white" opacity={0.4} />
+            </svg>
+        </div>
+        <div className='w-full flex-1 flex justify-between'>
+            <div className='bg-white opacity-20 w-[0.04em] h-full'></div>
+            <div className='bg-white opacity-20 w-[0.04em] h-full'></div>
+        </div>
+        <div className='flex items-end shrink-0'>
+            <svg className='shrink-0 -rotate-90' width="1em" height="1em" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 0.5H11L0.5 11V25" stroke="white" opacity={0.4} />
+            </svg>
+            <div className='bg-white opacity-20 h-[0.04em] flex-1'></div>
+            <svg className='shrink-0 rotate-180' width="1em" height="1em" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 0.5H11L0.5 11V25" stroke="white" />
+            </svg>
+        </div>
+    </div>
+}
 function ProgressCircle({ progress = 0.1, className }: { progress?: number, className?: string }) {
     const ref = useRef<SVGCircleElement>(null)
     const offset = Math.round(1383 * (1 - progress))
@@ -144,16 +174,16 @@ function ProgressCircle({ progress = 0.1, className }: { progress?: number, clas
                     dx="0"
                     dy="0"
                     stdDeviation="10"
-                    flood-color="#fff"
-                    flood-opacity="0.35" />
+                    floodColor="#fff"
+                    floodOpacity="0.35" />
             </filter>
             <linearGradient id="paint0_linear_571_374" x1="300" y1="46" x2="300" y2="546" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FFC144" />
-                <stop offset="1" stop-color="#FA8B16" />
+                <stop stopColor="#FFC144" />
+                <stop offset="1" stopColor="#FA8B16" />
             </linearGradient>
             <radialGradient id="paint0_radial_571_374">
-                <stop offset="0.8" stop-color="#FA8B16" />
-                <stop offset="1" stop-color="#F74503" />
+                <stop offset="0.8" stopColor="#FA8B16" />
+                <stop offset="1" stopColor="#F74503" />
             </radialGradient>
         </defs>
     </svg>
@@ -212,19 +242,9 @@ export function RouteComponent() {
                             <ProgressCircle className="text-[clamp(320px,41vw,600px)]" />
                         </div>
                     </div>
-                    <div className="root_anim_item leading-loose px-4 w-full whitespace-pre-wrap text-center relative">
+                    <div className="root_anim_item leading-loose p-4 whitespace-pre-wrap text-center relative mx-auto w-full max-w-7xl">
                         Every participant who contributes to validating AI operations, securing data integrity, and driving consensus <br className="hidden lg:block" />earns proportional returns—fostering a vibrant, self-sustaining ecosystem where community involvement <br className="hidden lg:block" />directly translates to shared prosperity and long-term value creation.
-                        <svg width="auto" height="100%" viewBox="0 0 1281 123" className="hidden lg:block absolute left-0 top-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path opacity="0.4" d="M1255.5 0.5H1269.6L1280.5 11.527V24.5" stroke="white" />
-                            <path opacity="0.2" d="M1255.5 0.5H25.5" stroke="white" />
-                            <path opacity="0.2" d="M0.499997 98.5L0.5 24.5" stroke="white" />
-                            <path opacity="0.2" d="M1280.5 98.5L1280.5 24.5" stroke="white" />
-                            <path opacity="0.2" d="M1255.5 122.5H25.5" stroke="white" />
-                            <path d="M25.5 0.5H11.3974L0.499999 11.527V24.5" stroke="white" />
-                            <path d="M1255.5 122.5H1269.6L1280.5 111.473V98.5" stroke="white" />
-                            <path opacity="0.4" d="M25.5 122.5H11.3974L0.499999 111.473V98.5" stroke="white" />
-                        </svg>
-
+                        <ABorder className='hidden lg:flex'/>
                     </div>
                 </div>
             </div>
