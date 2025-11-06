@@ -102,7 +102,7 @@ export function Frame2() {
                 style={{ background: 'linear-gradient(180deg, #FA8B16 0%, #FFC144 100%)' }}
                 className="root_anim_item w-screen h-screen max-h-200 flex">
                 <div
-                    className=" h-full flex justify-end items-center w-full basis-[637px] flex-1">
+                    className="h-full flex justify-end items-center w-full basis-[637px] flex-1">
                     <div className="w-full max-w-[637px] relative">
                         <AnimatePresence>
                             <motion.div key={`frame2-step-text-${data.step}`} initial={{ opacity: 0, y: '50%' }} animate={{ y: '-50%', opacity: 1 }} exit={{ opacity: 0, y: '-150%' }}

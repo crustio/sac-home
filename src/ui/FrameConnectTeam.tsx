@@ -24,8 +24,8 @@ export function FrameConnectTeam() {
             <TextLG lg="2" text="Connect with SAC team" className="font-lexend font-light text-3xl md:text-5xl lg:text-7xl leading-normal text-center" />
             <div className="md:text-lg text-center">Ready to dive into the world of decentralized AI solutions with us?</div>
             <div className="flex items-center gap-5 md:gap-10 justify-center flex-wrap">
-                {/* <Button className="h-12 flex items-center gap-4 w-50">Join now</Button>
-                <Button variant="outline" className="h-12 flex items-center gap-4 w-50 border-white/80 text-white"><FaGithub /> Github</Button> */}
+                <Button className="h-12 flex items-center gap-4 w-50">Join now</Button>
+                <Button variant="outline" className="h-12 flex items-center gap-4 w-50 border-white/80 text-white"><FaGithub /> Github</Button>
             </div>
         </div>
     </div>

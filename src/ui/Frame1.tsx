@@ -1,3 +1,4 @@
+import { scrollTo } from "@/lib/mutils";
 import { AnimSAC } from "../anims/AnimSAC";
 import CountUp from "../components/CountUp";
 import Particles from "../components/Particles";
@@ -30,8 +31,8 @@ export function Frame1() {
                 </div>
                 <AnimSAC className="root_anim_item md:absolute right-0 top-0 pointer-events-none" />
                 <div className="root_anim_item flex items-center gap-5 z-10 justify-center md:justify-start">
-                    <Button size="lg">Explore Tech</Button>
-                    <Button variant="outline" size="lg">Join Community</Button>
+                    <Button size="lg" onClick={() => scrollTo('tech')}>Explore Tech</Button>
+                    {/* <Button variant="outline" size="lg">Join Community</Button> */}
                 </div>
                 {/* Text */}
                 <TextLG
@@ -48,7 +49,7 @@ export function Frame1() {
                 <div className="flex flex-col md:flex-row justify-between gap-5 mt-8 md:mt-25 pointer-events-none">
                     {renderNumber("STORAGE CAPACITY", 144969, "TB")}
                     {renderNumber("GPU POWER", 254780321, "G")}
-                    {renderNumber("VERIFY NODES", 200000, "+")}
+                    {renderNumber("VERIFY NODES", 100000, "")}
                 </div>
             </div>
         </div>

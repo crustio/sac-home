@@ -33,7 +33,7 @@ function Subscribe() {
             <button onClick={() => mutate()} disabled={isPending || !email}
                 className="text-[#FA8B16] w-full h-12 bg-[#181818] md:w-40 shrink-0 rounded-lg border border-[#232323] hover:opacity-80 px-5 cursor-pointer flex justify-center items-center gap-2">
                 {isPending && <Loader className="animate-spin" />}
-                Subsribe
+                Subscribe
             </button>
         </div>
     </div>

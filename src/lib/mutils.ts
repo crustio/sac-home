@@ -41,3 +41,10 @@ export function getErrorMessage(error: unknown): string {
 export function toastOnError(e: unknown) {
   toast.error(getErrorMessage(e));
 }
+
+export function scrollTo(elId: string) {
+  const el = document.getElementById(elId);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}

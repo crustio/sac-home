@@ -4,27 +4,27 @@ export const Route = createFileRoute('/purchase')({
     component: RouteComponent,
 })
 
-import { cn } from "@/lib/utils"
-import { useEffect, useRef, useState, type PropsWithChildren } from "react"
-import urlCube from '/WireframeCube.png'
-import urlBgCube from '/bgcube.png'
-import urlMountains from '/mountains.png'
-import urlBgpg from '/bgpg.png'
-import urlNftPurchase from '/nftpurchase.png'
+import Counter from "@/components/Counter"
 import { TextLG } from "@/components/Text"
-import gsap from "gsap"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
-import Counter from "@/components/Counter"
-import { useInterval } from "react-use"
-import { useIsMobile } from "@/hooks/useIsMobile"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { useIsMobile } from "@/hooks/useIsMobile"
+import { scrollTo } from '@/lib/mutils'
+import { cn } from "@/lib/utils"
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+import gsap from "gsap"
+import { useEffect, useRef, useState, useTransition, type HTMLAttributes } from "react"
+import { useInterval } from "react-use"
+import { useAccount, useSignMessage } from 'wagmi'
+import urlCube from '/WireframeCube.png'
+import urlBgCube from '/bgcube.png'
+import urlBgpg from '/bgpg.png'
+import urlMountains from '/mountains.png'
+import urlNftPurchase from '/nftpurchase.png'
 
-
-
-
-function Btn({ children, className }: PropsWithChildren<{ className?: string }>) {
-    return <div className={cn("relative flex items-center py-4 px-8 font-semibold text-[1.375rem] cursor-pointer", className)}>
+function Btn({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) {
+    return <div {...props} className={cn("relative flex items-center py-4 px-8 font-semibold text-[1.375rem] cursor-pointer", className)}>
         <div style={{
             background: `
                         radial-gradient(32.52% 115.63% at 37.5% 100%, rgba(255, 255, 255, 0.292) 0%, rgba(255, 255, 255, 0.048) 100%),
@@ -68,7 +68,7 @@ const faqs: { q: string, a: string }[] = [
     },
     {
         q: `How Do I Pay for a License?`,
-        a: `We accept USDC on Arbitrum.`
+        a: `We accept USDC on BSC.`
     },
     {
         q: `What Do I Receive Upon Purchase?`,
@@ -79,7 +79,7 @@ const faqs: { q: string, a: string }[] = [
         a: `Node runners can earn up to 20% of the token supply over three years for helping secure and validate the network.`
     },
     {
-        q: `Why participate in verificaiton network?`,
+        q: `Why Participate in Verification Network?`,
         a: `By operating a node, you empower decentralized AI through Al data verification while collecting rewards for your contributions.`
     },
     {
@@ -191,6 +191,37 @@ function ProgressCircle({ progress = 0.1, className }: { progress?: number, clas
 
 }
 
+
+function RegisterNow() {
+    const acc = useAccount()
+    const { signMessage } = useSignMessage()
+    const con = useConnectModal()
+    const [isClick, setIsClick] = useState(false)
+    const [isPending, startTransition] = useTransition()
+    const signMsg = () => {
+        if (acc.isConnected) {
+            signMessage({ message: 'For Strategy A Crust Register' })
+        }
+    }
+    const mutate = () => {
+        if (isPending) return
+        startTransition(async () => {
+            if (acc.isConnecting) return
+            if (!acc.isConnected) {
+                if (!con.openConnectModal) return
+                if (con.connectModalOpen) return
+                setIsClick(true)
+                con.openConnectModal()
+            }
+            signMsg()
+        })
+    }
+
+    useEffect(() => {
+        isClick && signMsg()
+    }, [isClick, acc.isConnected])
+    return <Btn className="" onClick={mutate}>Register now</Btn>
+}
 export function RouteComponent() {
     return <>
         <div className="w-full relative pt-18 md:pt-25 flex flex-col items-center">
@@ -216,7 +247,7 @@ export function RouteComponent() {
                         <div className="root_anim_item"><img src={urlCube} className="aspect-square w-[1.1em] -rotate-45 mt-[2.3em]" /></div>
                         <div className="root_anim_item"><img src={urlCube} className="aspect-square w-[1.2em] mt-[0.5em]" /></div>
                     </div>
-                    <Btn className="root_anim_item mt-18">Head to Purchase</Btn>
+                    <Btn className="root_anim_item mt-18" onClick={() => scrollTo("purchase")}>Head to Purchase</Btn>
                 </div>
             </div>
             <div className="flex w-full flex-col overflow-hidden items-center py-5 md:py-10 mt-5 md:mt-10 gap-5 md:gap-10">
@@ -264,10 +295,10 @@ export function RouteComponent() {
                         text={<>LiteNode License<br />NFT Purchase</>} />
                     <div className="flex flex-col lg:flex-row items-center gap-6 w-full pb-20">
                         <img src={urlNftPurchase} className="root_anim_item w-full lg:w-[35vw] max-w-167 flex-1" />
-                        <div className="root_anim_item flex flex-col gap-6 items-center flex-1 w-full">
+                        <div id='purchase' className="root_anim_item flex flex-col gap-6 items-center flex-1 w-full">
                             <TextLG lg="2" className=" text-4xl font-lexend mb-5 text-center hidden lg:block text-nowrap"
                                 text={"LiteNode License NFT Purchase"} />
-                            <Btn className="">Register now</Btn>
+                            <RegisterNow />
                             <Dialog >
                                 <DialogTrigger asChild>
                                     <Button className="text-white underline" variant="link">Disclaimer</Button>
@@ -281,7 +312,7 @@ export function RouteComponent() {
                                     <DialogHeader>
                                         <DialogTitle>Disclaimer</DialogTitle>
                                     </DialogHeader>
-                                    <DialogDescription className='flex flex-col gap-2 indent-10 h-full overflow-y-auto'>
+                                    <DialogDescription className='flex flex-col gap-1 h-full overflow-y-auto'>
                                         <p>This document and the LiteNode License NFT offering are for informational purposes only and do not constitute financial, investment, legal, tax, or other professional advice. Participation in the SAC Verification Network involves significant risks, including but not limited to substantial volatility in $SAC token value, potential total loss of principal, and regulatory uncertainties in the rapidly evolving blockchain and AI sectors. Rewards, yields, and incentives are not guaranteed and depend on network performance, governance decisions, delegation outcomes, and overall ecosystem health—factors subject to change via community votes.</p>
                                         <p>Users assume full responsibility for all risks associated with delegation, including operator errors, hardware failures, smart contract vulnerabilities, or malicious actions by third parties, which could result in lost rewards, slashed bonds, or unrecoverable NFTs. No warranties are provided regarding uptime, security, or returns; SAC and its affiliates disclaim liability for any direct, indirect, or consequential damages arising from use.</p>
                                         <p>Always conduct your own due diligence, consult qualified professionals (e.g., financial advisors, attorneys), and ensure compliance with applicable laws in your jurisdiction, including securities regulations (e.g., SEC guidelines for U.S. users) and data privacy standards (e.g., GDPR). This is not an offer to sell or solicitation to buy securities in any jurisdiction where prohibited.</p>
@@ -291,7 +322,7 @@ export function RouteComponent() {
                                     </DialogFooter>
                                 </DialogContent>
                             </Dialog>
-                            <Button className="border-white/80 text-white" size="lg" variant="outline">Registration Period</Button>
+                            <Button className="border-white/80 text-white cursor-default" size="lg" variant="outline">Registration Period</Button>
                             <TimerDown end={new Date("2025/12/30").getTime()} />
                         </div>
                     </div>

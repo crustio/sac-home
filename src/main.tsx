@@ -5,15 +5,26 @@ import '@fontsource/lexend/600.css';
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
-import { createRoot } from 'react-dom/client';
+import '@rainbow-me/rainbowkit/styles.css';
 import './index.css';
+import { createRoot } from 'react-dom/client';
 
-import { RouterProvider, createRouter } from '@tanstack/react-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import {
+  darkTheme,
+  getDefaultConfig,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { MotionConfig } from 'motion/react';
-import { routeTree } from './routeTree.gen';
-import { toastOnError } from './lib/mutils';
 import { toast, Toaster } from 'sonner';
+import { WagmiProvider } from 'wagmi';
+import {
+  bsc,
+  mainnet
+} from 'wagmi/chains';
+import { toastOnError } from './lib/mutils';
+import { routeTree } from './routeTree.gen';
 // Set up a Router instance
 const router = createRouter({
   routeTree,
@@ -39,14 +50,27 @@ const client = new QueryClient({
   }
 })
 
+
+
+const config = getDefaultConfig({
+  appName: 'Strategy A Crust',
+  projectId: 'f6ed428863bd8b38d7f11d356f800195',
+  chains: [mainnet, bsc],
+  ssr: false, // If your dApp uses server side rendering (SSR)
+});
+
 // eslint-disable-next-line react-refresh/only-export-components
 function Root() {
 
   return <MotionConfig transition={{ default: { duration: 0.5, ease: "backOut" } }}>
-    <QueryClientProvider client={client}>
-      <Toaster position='top-right' offset={{ top: 100, right: 20 }} />
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={client}>
+        <RainbowKitProvider locale='en' theme={darkTheme()}>
+          <Toaster position='top-right' offset={{ top: 100, right: 20 }} />
+          <RouterProvider router={router} />
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   </MotionConfig>
 }
 

@@ -17,6 +17,7 @@
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.3",
+    "@rainbow-me/rainbowkit": "^2.2.9",
     "@tailwindcss/vite": "^4.1.15",
     "@tanstack/react-query": "^5.90.6",
     "@tanstack/react-router": "^1.134.9",
@@ -37,7 +38,9 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.15",
-    "valtio": "^2.1.8"
+    "valtio": "^2.1.8",
+    "viem": "2.x",
+    "wagmi": "^2.19.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
