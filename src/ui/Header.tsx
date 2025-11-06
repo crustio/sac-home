@@ -7,16 +7,16 @@ import { FiMenu } from 'react-icons/fi'
 import { Link } from "@tanstack/react-router";
 
 const tabs: { name: string, link: string }[] = [
-  { name: "Tech", link: "#" },
-  { name: "Build", link: "http" },
-  { name: "Community", link: "http" },
-  { name: "Blog", link: "http" },
-  { name: "Documents", link: "http" },
+  // { name: "Tech", link: "#" },
+  // { name: "Build", link: "http" },
+  // { name: "Community", link: "http" },
+  // { name: "Blog", link: "http" },
+  // { name: "Documents", link: "http" },
 ]
 
 const sosials: { icon: ReactNode, link: string }[] = [
-  { icon: <FaXTwitter />, link: "https://twitter.com/" },
-  { icon: <FaDiscord />, link: "https://discord.com/" },
+  // { icon: <FaXTwitter />, link: "https://twitter.com/" },
+  // { icon: <FaDiscord />, link: "https://discord.com/" },
 ]
 
 export function Sosials({ className }: { className?: string }) {

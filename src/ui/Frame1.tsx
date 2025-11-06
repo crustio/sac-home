@@ -29,7 +29,7 @@ export function Frame1() {
                     <div className="opacity-60 text-3xl md:text-6xl font-medium">Infrastructure</div>
                 </div>
                 <AnimSAC className="root_anim_item md:absolute right-0 top-0 pointer-events-none" />
-                <div className="root_anim_item flex items-center gap-5 z-10">
+                <div className="root_anim_item flex items-center gap-5 z-10 justify-center md:justify-start">
                     <Button size="lg">Explore Tech</Button>
                     <Button variant="outline" size="lg">Join Community</Button>
                 </div>
