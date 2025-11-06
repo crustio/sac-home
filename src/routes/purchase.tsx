@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import Counter from "@/components/Counter"
 import { useInterval } from "react-use"
 import { useIsMobile } from "@/hooks/useIsMobile"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
 
 
@@ -244,7 +245,7 @@ export function RouteComponent() {
                     </div>
                     <div className="root_anim_item leading-loose p-4 whitespace-pre-wrap text-center relative mx-auto w-full max-w-7xl">
                         Every participant who contributes to validating AI operations, securing data integrity, and driving consensus <br className="hidden lg:block" />earns proportional returns—fostering a vibrant, self-sustaining ecosystem where community involvement <br className="hidden lg:block" />directly translates to shared prosperity and long-term value creation.
-                        <ABorder className='hidden lg:flex'/>
+                        <ABorder className='hidden lg:flex' />
                     </div>
                 </div>
             </div>
@@ -267,7 +268,29 @@ export function RouteComponent() {
                             <TextLG lg="2" className=" text-4xl font-lexend mb-5 text-center hidden lg:block text-nowrap"
                                 text={"LiteNode License NFT Purchase"} />
                             <Btn className="">Register now</Btn>
-                            <Button className="text-white underline" variant="link">Disclaimer</Button>
+                            <Dialog >
+                                <DialogTrigger asChild>
+                                    <Button className="text-white underline" variant="link">Disclaimer</Button>
+                                </DialogTrigger>
+                                <DialogOverlay />
+                                <DialogContent
+                                    showCloseButton={false}
+                                    onEscapeKeyDown={(e) => e.preventDefault()}
+                                    onInteractOutside={(e) => { e.preventDefault() }}
+                                    className='h-1/2'>
+                                    <DialogHeader>
+                                        <DialogTitle>Disclaimer</DialogTitle>
+                                    </DialogHeader>
+                                    <DialogDescription className='flex flex-col gap-2 indent-10 h-full overflow-y-auto'>
+                                        <p>This document and the LiteNode License NFT offering are for informational purposes only and do not constitute financial, investment, legal, tax, or other professional advice. Participation in the SAC Verification Network involves significant risks, including but not limited to substantial volatility in $SAC token value, potential total loss of principal, and regulatory uncertainties in the rapidly evolving blockchain and AI sectors. Rewards, yields, and incentives are not guaranteed and depend on network performance, governance decisions, delegation outcomes, and overall ecosystem health—factors subject to change via community votes.</p>
+                                        <p>Users assume full responsibility for all risks associated with delegation, including operator errors, hardware failures, smart contract vulnerabilities, or malicious actions by third parties, which could result in lost rewards, slashed bonds, or unrecoverable NFTs. No warranties are provided regarding uptime, security, or returns; SAC and its affiliates disclaim liability for any direct, indirect, or consequential damages arising from use.</p>
+                                        <p>Always conduct your own due diligence, consult qualified professionals (e.g., financial advisors, attorneys), and ensure compliance with applicable laws in your jurisdiction, including securities regulations (e.g., SEC guidelines for U.S. users) and data privacy standards (e.g., GDPR). This is not an offer to sell or solicitation to buy securities in any jurisdiction where prohibited.</p>
+                                    </DialogDescription>
+                                    <DialogFooter>
+                                        <DialogClose className='cursor-pointer'><Button className='outline-none'>Noted</Button></DialogClose>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
                             <Button className="border-white/80 text-white" size="lg" variant="outline">Registration Period</Button>
                             <TimerDown end={new Date("2025/12/30").getTime()} />
                         </div>
