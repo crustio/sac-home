@@ -22,6 +22,7 @@ import urlBgCube from '/bgcube.png'
 import urlBgpg from '/bgpg.png'
 import urlMountains from '/mountains.png'
 import urlNftPurchase from '/nftpurchase.png'
+import { smoothTo } from '@/hooks/gsap'
 
 function Btn({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) {
     return <div {...props} className={cn("relative flex items-center py-4 px-8 font-semibold text-[1.375rem] cursor-pointer", className)}>
@@ -247,7 +248,7 @@ export function RouteComponent() {
                         <div className="root_anim_item"><img src={urlCube} className="aspect-square w-[1.1em] -rotate-45 mt-[2.3em]" /></div>
                         <div className="root_anim_item"><img src={urlCube} className="aspect-square w-[1.2em] mt-[0.5em]" /></div>
                     </div>
-                    <Btn className="root_anim_item mt-18" onClick={() => scrollTo("purchase")}>Head to Purchase</Btn>
+                    <Btn className="root_anim_item mt-18" onClick={() => smoothTo("#purchase")}>Head to Purchase</Btn>
                 </div>
             </div>
             <div className="flex w-full flex-col overflow-hidden items-center py-5 md:py-10 mt-5 md:mt-10 gap-5 md:gap-10">

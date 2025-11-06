@@ -5,6 +5,7 @@ import Particles from "../components/Particles";
 import { TextLG } from "../components/Text";
 import TextType from "../components/TextType";
 import { Button } from "../components/ui/button";
+import { smoothTo } from "@/hooks/gsap";
 
 export function Frame1() {
     const renderNumber = (title: string, num: number, suffix: string) => {
@@ -31,7 +32,7 @@ export function Frame1() {
                 </div>
                 <AnimSAC className="root_anim_item md:absolute right-0 top-0 pointer-events-none" />
                 <div className="root_anim_item flex items-center gap-5 z-10 justify-center md:justify-start">
-                    <Button size="lg" onClick={() => scrollTo('tech')}>Explore Tech</Button>
+                    <Button size="lg" onClick={() => smoothTo('#tech')}>Explore Tech</Button>
                     {/* <Button variant="outline" size="lg">Join Community</Button> */}
                 </div>
                 {/* Text */}
