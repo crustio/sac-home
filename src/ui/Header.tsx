@@ -5,6 +5,8 @@ import logo from "/logo.svg";
 import { cn } from "../lib/utils";
 import { FiMenu } from 'react-icons/fi'
 import { Link } from "@tanstack/react-router";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const tabs: { name: string, link: string }[] = [
   // { name: "Tech", link: "#" },
@@ -35,10 +37,19 @@ export function Sosials({ className }: { className?: string }) {
   </div>
 }
 export function Header() {
+  useGSAP(() => {
+    ScrollTrigger.create({
+      trigger: '#header',
+      pin: true,
+      start: 'top top',
+      end: '+=50000',
+      pinSpacing: false
+    })
+  }, {})
   return (
-    <div className="root_anim_item fixed top-0 w-full bg-black border-b border-b-white/15 md:border-b-transparent z-100">
+    <div id="header" className="fixed top-0 w-full bg-black border-b border-b-white/15 md:border-b-transparent z-100">
       <div
-        className="flex items-center justify-between w-full max-w-[1440px] px-4 mx-auto py-4 md:py-8 ">
+        className="root_anim_item flex items-center justify-between w-full max-w-[1440px] px-4 mx-auto py-4 md:py-8 ">
         <Link to="/">
           <img src={logo} alt="Logo" className="w-[100px] h-auto" />
         </Link>
